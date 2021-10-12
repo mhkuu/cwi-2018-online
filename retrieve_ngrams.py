@@ -1,11 +1,14 @@
 from collections import Counter
 
-from nltk import word_tokenize, ngrams
+from nltk import word_tokenize
+from nltk.lm.preprocessing import padded_everygrams
 
 from utils.dataset import Dataset
 
+LANGUAGE = 'spanish'
+
 if __name__ == '__main__':
-    data = Dataset('spanish')
+    data = Dataset(LANGUAGE)
     results = []
     sentences = set()
     for line in data.trainset:
@@ -14,10 +17,13 @@ if __name__ == '__main__':
             continue
         sentences.add(s)
         for w in word_tokenize(s):
-            w = w.lower()
-            result = ngrams(w, 2)
+            result = padded_everygrams(2, w.lower())
             if result:
                 results.extend(result)
 
-    for k, v in Counter(results).most_common(100):
-        print(k[0] + k[1], v, sep='\t')
+    with open('datasets/{}/freq-ngrams.txt'.format(LANGUAGE), 'w') as out_file:
+        out_file.write('ngram\tfreq\n')
+        for k, v in Counter(results).most_common():
+            if v == 1:
+                break
+            out_file.write('{}\t{}\n'.format(''.join(k), v))

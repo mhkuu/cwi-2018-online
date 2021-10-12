@@ -1,21 +1,13 @@
 from nltk import ngrams
 
+from utils.ngram import retrieve_ngram_freq
 from .abstract import AbstractModel
 
 
-class Ngram(AbstractModel):
+class NgramMissing(AbstractModel):
     def __init__(self, language, max_unknown_grams):
         self.max_unknown_grams = max_unknown_grams
-
-        self.ngram_freq = dict()
-        with open('datasets/{}/freq-ngrams.txt'.format(language), 'r') as f:
-            for n, line in enumerate(f):
-                if n == 0:
-                    continue
-                columns = line.strip('\n').split('\t')
-                word = columns[0]
-                freq = columns[1]
-                self.ngram_freq[word] = int(freq)
+        self.ngram_freq = retrieve_ngram_freq(language)
 
     def train(self, train_set):
         pass

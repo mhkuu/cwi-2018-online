@@ -52,7 +52,7 @@ The frequency list is compiled from the British National Corpus. We copied the l
 
 ### Character n-gram-based
 
-This classifier checks if there are infrequent bigrams in a word.
+This classifier checks if there are infrequent bigrams in a word, or calculates the bigram probability.
 The frequency list is generated from the character bigrams in the training set, through `retrieve_ngrams.py`.
 
 ### TODO
@@ -86,3 +86,6 @@ For fun purposes we'll share our weekly high scores here.
     05-10-2021
     English: Length <= 7 + frequency, macro-F1: 0.694
     Spanish: Length <= 9, macro-F1: 0.634
+    12-10-2021
+    English: N-grams, probability cut-off: 1e-12, score: 0.719
+    Spanish: Length <= 9, score: 0.634
