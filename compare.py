@@ -1,6 +1,7 @@
 from models.baseline import Baseline
 from models.length import Length
 from models.length_and_freq import LengthFreq
+from models.logreg import LogReg
 from models.ngram_missing import NgramMissing
 from models.ngram_prob import NgramProb
 from models.dummy import Dummy
@@ -31,7 +32,7 @@ def process(language):
         print('== Length + Frequency ==')
         for n in range(3, 15):
             title = 'Length <= {} + frequency'.format(n)
-            model = LengthFreq(n)
+            model = LengthFreq(language, n)
             macro_f1, _ = train_and_report(model, data)
             scores[title] = macro_f1
 
@@ -48,13 +49,22 @@ def process(language):
         macro_f1, _ = train_and_report(model, data)
         scores[title] = macro_f1
 
+    print('== All-in-one ==')
+    title = 'Logistic regression'
+    model = LogReg(language)
+    macro_f1, _ = train_and_report(model, data)
+    # print(model.model.coef_)
+    scores[title] = macro_f1
+
     title = 'Dummy'
     dummy = Dummy()
     macro_f1, _ = train_and_report(dummy, data)
     scores[title] = macro_f1
 
-    high_score = max(scores, key=scores.get)
-    print('high score: {}, score: {:.3f}'.format(high_score, scores[high_score]))
+    high_scores = sorted(scores, key=scores.get, reverse=True)[:3]
+    print('High scores:')
+    for n, high_score in enumerate(high_scores, start=1):
+        print('{}. {}, score: {:.3f}'.format(n, high_score, scores[high_score]))
 
 
 def train_and_report(model, data, detailed=False):

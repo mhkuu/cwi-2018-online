@@ -1,13 +1,12 @@
 from nltk import ngrams
 
-from utils.ngram import retrieve_ngram_freq
-from .abstract import AbstractModel
+from .ngram import NgramCalculator
 
 
-class NgramMissing(AbstractModel):
+class NgramMissing(NgramCalculator):
     def __init__(self, language, max_unknown_grams):
+        super().__init__(language)
         self.max_unknown_grams = max_unknown_grams
-        self.ngram_freq = retrieve_ngram_freq(language)
 
     def train(self, train_set):
         pass

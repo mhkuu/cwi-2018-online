@@ -57,10 +57,7 @@ The frequency list is generated from the character bigrams in the training set, 
 
 ### TODO
 
-* Not checking if present for frequency and n-grams, but also using the frequency in some way.
 * Add more measures :-) 
-* Allow combining measures into one classifier without copying code.
-* A nice way of reporting the high score :-P
 
 ## Scoring a classifier
 
@@ -87,5 +84,11 @@ For fun purposes we'll share our weekly high scores here.
     English: Length <= 7 + frequency, macro-F1: 0.694
     Spanish: Length <= 9, macro-F1: 0.634
     12-10-2021
-    English: N-grams, probability cut-off: 1e-12, score: 0.719
+    English: 
+        1. Logistic regression, score: 0.739
+        2. N-grams, probability cut-off: 1e-12, score: 0.719
+        3. N-grams, probability cut-off: 1e-11, score: 0.698
     Spanish: Length <= 9, score: 0.634
+        1. Length <= 9, score: 0.634
+        2. Length <= 8, score: 0.622
+        3. N-grams, probability cut-off: 1e-13, score: 0.619

@@ -1,13 +1,10 @@
-import math
-
-from utils.ngram import retrieve_ngram_freq
-from .abstract import AbstractModel
+from .ngram import NgramCalculator
 
 
-class NgramProb(AbstractModel):
+class NgramProb(NgramCalculator):
     def __init__(self, language, cut_off):
+        super().__init__(language)
         self.cut_off = cut_off
-        self.ngram_freq = retrieve_ngram_freq(language)
 
     def train(self, train_set):
         pass
@@ -24,20 +21,9 @@ class NgramProb(AbstractModel):
         if word[0].isupper():
             return '0'
 
-        prob = 1
-        prev = '<s>'
-        for character in word.lower():
-            prob += self.get_ngram_prob(character, prev)
-            prev = character
-        prob += self.get_ngram_prob(prev, '</s>')
+        prob = self.full_ngram_prob(word)
 
         # if math.exp(prob) > self.cut_off:
         #     print(word)
 
-        return str(int(math.exp(prob) < self.cut_off))
-
-    def get_ngram_prob(self, curr, prev):
-        # We use Laplace-smoothing here -- which is not the best solution!
-        prob_curr = self.ngram_freq.get(prev + curr, 1)
-        prob_prev = self.ngram_freq.get(prev, len(self.ngram_freq.keys()))
-        return math.log(prob_curr / prob_prev)
+        return str(int(prob < self.cut_off))
