@@ -2,11 +2,11 @@ from abc import ABC
 
 from nltk.stem import PorterStemmer
 
-LIST_LIMIT = 1000  # Limit that we have on size of word list - we could think of making this a parameter even?
+LIST_LIMIT = 1000  # Limit that we have on size of word list
 
 
 class FrequencyCalculator(object):
-    def __init__(self, language):
+    def __init__(self, language, list_limit=LIST_LIMIT):
         self.frequency = dict()
 
         if language == 'english':
@@ -19,7 +19,7 @@ class FrequencyCalculator(object):
                     freq = columns[3]
                     # if len(word) >= LENGTH_CUTOFF:  # only include long words?!
                     self.frequency[word] = int(freq)
-                    if len(self.frequency) == LIST_LIMIT:
+                    if list_limit and len(self.frequency) == list_limit:
                         break
 
         # We could also consider WordNetLemmatizer instead -- but we have a stemmer in production!
