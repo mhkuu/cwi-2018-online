@@ -48,7 +48,8 @@ We have another baseline which just checks on the length of the word. Word lengt
 ### Frequency-based
 
 This classifier, additional to length, checks if the stemmed word appears in the 1000 most frequently used words in a frequency list.
-The frequency list is compiled from the British National Corpus. We copied the list from List 1.2 on [this website](http://ucrel.lancs.ac.uk/bncfreq/flists.html).
+- For English, the frequency list is compiled from the British National Corpus. We copied the list from List 1.2 on [this website](http://ucrel.lancs.ac.uk/bncfreq/flists.html).
+- For Spanish, the frequency list is compiled from the [Corpus de Referencia del Español Actual (CREA)](http://corpus.rae.es/lfrecuencias.html).
 
 ### Character n-gram-based
 
@@ -88,7 +89,12 @@ For fun purposes we'll share our weekly high scores here.
         1. Logistic regression, score: 0.739
         2. N-grams, probability cut-off: 1e-12, score: 0.719
         3. N-grams, probability cut-off: 1e-11, score: 0.698
-    Spanish: Length <= 9, score: 0.634
+    Spanish:
         1. Length <= 9, score: 0.634
         2. Length <= 8, score: 0.622
         3. N-grams, probability cut-off: 1e-13, score: 0.619
+    04-11-2021
+    Spanish:
+        1. Length <= 8 + frequency, score: 0.651
+        2. Length <= 9 + frequency, score: 0.646
+        3. Length <= 9, score: 0.634 

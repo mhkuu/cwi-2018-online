@@ -10,7 +10,7 @@ class Baseline(AbstractModel):
         # from 'Multilingual and Cross-Lingual Complex Word Identification' (Yimam et. al, 2017)
         if language == 'english':
             self.avg_word_length = 5.3
-        else:  # spanish
+        if language == 'spanish':
             self.avg_word_length = 6.2
 
         self.model = LogisticRegression()

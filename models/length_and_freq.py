@@ -1,9 +1,12 @@
-from .freq import FrequencyCalculator
+from models.abstract import AbstractModel
+from models.freq import FrequencyCalculator
 
 
-class LengthFreq(FrequencyCalculator):
+class LengthFreq(AbstractModel):
     def __init__(self, language, length_cutoff):
-        super().__init__(language)
+        self.language = language
+
+        self.freq_calc = FrequencyCalculator(language)
         self.length_cutoff = length_cutoff
 
     def train(self, train_set):
@@ -17,6 +20,6 @@ class LengthFreq(FrequencyCalculator):
         return result
 
     def calc(self, word):
-        stemmed = self.stemmer.stem(word, to_lowercase=True)
-        result = len(word) >= self.length_cutoff and stemmed not in self.frequency.keys()
+        freq = self.freq_calc.get_freq(word)
+        result = len(word) >= self.length_cutoff and freq == 1
         return str(int(result))
