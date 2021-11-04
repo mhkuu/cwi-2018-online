@@ -28,12 +28,13 @@ def process(language):
         macro_f1, _ = train_and_report(model, data)
         scores[title] = macro_f1
 
-    print('== Length + Frequency ==')
-    for n in range(3, 15):
-        title = 'Length <= {} + frequency'.format(n)
-        model = LengthFreq(language, n)
-        macro_f1, _ = train_and_report(model, data)
-        scores[title] = macro_f1
+    if language in ['english', 'spanish']:
+        print('== Length + Frequency ==')
+        for n in range(3, 15):
+            title = 'Length <= {} + frequency'.format(n)
+            model = LengthFreq(language, n)
+            macro_f1, _ = train_and_report(model, data)
+            scores[title] = macro_f1
 
     print('== N-grams ==')
     for n in range(0, 10):
@@ -60,7 +61,7 @@ def process(language):
     macro_f1, _ = train_and_report(dummy, data)
     scores[title] = macro_f1
 
-    high_scores = sorted(scores, key=scores.get, reverse=True)
+    high_scores = sorted(scores, key=scores.get, reverse=True)[:10]
     print('High scores:')
     for n, high_score in enumerate(high_scores, start=1):
         print('{}. {}, score: {:.3f}'.format(n, high_score, scores[high_score]))
@@ -87,5 +88,9 @@ if __name__ == '__main__':
     process('english')
     print('= Spanish =')
     process('spanish')
+    print('= German =')
+    process('german')
+    # print('= French =')
+    # process('french')
 
 

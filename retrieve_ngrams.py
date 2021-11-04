@@ -5,7 +5,7 @@ from nltk.lm.preprocessing import padded_everygrams
 
 from utils.dataset import Dataset
 
-LANGUAGE = 'spanish'
+LANGUAGE = 'german'
 
 if __name__ == '__main__':
     data = Dataset(LANGUAGE)
