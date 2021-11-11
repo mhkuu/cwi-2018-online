@@ -2,7 +2,7 @@ from abc import ABC
 
 from nltk.stem import PorterStemmer
 
-LIST_LIMIT = 1000  # Limit that we have on size of word list
+LIST_LIMIT = 1000  # Only include the n most frequent words -- we should play around with this number a bit!
 
 
 class FrequencyCalculator(object):
@@ -30,6 +30,17 @@ class FrequencyCalculator(object):
                     columns = line.strip('\n').split('\t')
                     word = columns[1]
                     freq = columns[2].strip().replace(',', '')
+                    # if len(word) >= LENGTH_CUTOFF:  # only include long words?!
+                    self.frequency[word] = int(freq)
+                    if list_limit and len(self.frequency) == list_limit:
+                        break
+
+        if language == 'german':
+            with open('datasets/{}/freq-opensubtitles.txt'.format(language), 'r') as f:
+                for n, line in enumerate(f):
+                    columns = line.strip('\n').split()
+                    word = columns[0]
+                    freq = columns[1]
                     # if len(word) >= LENGTH_CUTOFF:  # only include long words?!
                     self.frequency[word] = int(freq)
                     if list_limit and len(self.frequency) == list_limit:

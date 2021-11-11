@@ -28,7 +28,7 @@ def process(language):
         macro_f1, _ = train_and_report(model, data)
         scores[title] = macro_f1
 
-    if language in ['english', 'spanish']:
+    if language in ['english', 'spanish', 'german']:
         print('== Length + Frequency ==')
         for n in range(3, 15):
             title = 'Length <= {} + frequency'.format(n)

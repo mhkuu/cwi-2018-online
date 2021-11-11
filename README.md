@@ -47,9 +47,10 @@ We have another baseline which just checks on the length of the word. Word lengt
 
 ### Frequency-based
 
-This classifier, additional to length, checks if the stemmed word appears in the 1000 most frequently used words in a frequency list.
+This classifier, additional to length, checks if the (stemmed) word appears in the 1000 most frequently used words in a frequency list.
 - For English, the frequency list is compiled from the British National Corpus. We copied the list from List 1.2 on [this website](http://ucrel.lancs.ac.uk/bncfreq/flists.html).
 - For Spanish, the frequency list is compiled from the [Corpus de Referencia del Español Actual (CREA)](http://corpus.rae.es/lfrecuencias.html).
+- For German, the frequency list is compiled from [OpenSubtitles2016](http://opus.lingfil.uu.se/OpenSubtitles2016.php), using [this nice repository](https://github.com/hermitdave/FrequencyWords/).
 
 ### Character n-gram-based
 
