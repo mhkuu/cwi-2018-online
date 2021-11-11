@@ -1,12 +1,16 @@
-from .ngram import NgramCalculator
+from .abstract import AbstractModel
+from calculators.ngram import NgramCalculator
 
 
-class NgramProb(NgramCalculator):
+class NgramProb(AbstractModel):
     def __init__(self, language, cut_off):
-        super().__init__(language)
+        self.language = language
         self.cut_off = cut_off
 
+        self.ngram_calc = NgramCalculator(language)
+
     def train(self, train_set):
+        # No training required
         pass
 
     def test(self, test_set):
@@ -17,13 +21,10 @@ class NgramProb(NgramCalculator):
         return result
 
     def calc(self, word):
-        # Consider upper-case words to be names and hence non-complex
-        if word[0].isupper():
+        # Consider upper-case words in languages other than German to be names and hence non-complex
+        if self.language != 'german' and word[0].isupper():
             return '0'
 
-        prob = self.full_ngram_prob(word)
-
-        # if math.exp(prob) > self.cut_off:
-        #     print(word)
+        prob = self.ngram_calc.calc_word_prob(word)
 
         return str(int(prob < self.cut_off))

@@ -1,8 +1,8 @@
 from sklearn.linear_model import LogisticRegression
 
 from models.abstract import AbstractModel
-from models.freq import FrequencyCalculator
-from models.ngram import NgramCalculator
+from calculators.freq import FrequencyCalculator
+from calculators.ngram import NgramCalculator
 
 
 class LogReg(AbstractModel):
@@ -18,7 +18,7 @@ class LogReg(AbstractModel):
         length = len(word)
         starts_uppercase = int(word[0].isupper())
         freq = self.freq_calc.get_freq(word)
-        ngram_prob = self.ngram_calc.full_ngram_prob(word)
+        ngram_prob = self.ngram_calc.calc_word_prob(word)
 
         return [length, starts_uppercase, freq, ngram_prob]
 

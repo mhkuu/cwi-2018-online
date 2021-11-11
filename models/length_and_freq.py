@@ -1,5 +1,5 @@
 from models.abstract import AbstractModel
-from models.freq import FrequencyCalculator
+from calculators.freq import FrequencyCalculator
 
 
 class LengthFreq(AbstractModel):
