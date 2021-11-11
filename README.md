@@ -98,3 +98,8 @@ For fun purposes we'll share our weekly high scores here.
         1. Length <= 8 + frequency, score: 0.651
         2. Length <= 9 + frequency, score: 0.646
         3. Length <= 9, score: 0.634 
+    11-11-2021
+    German:
+        1. Length <= 10, score: 0.721
+        2. N-grams, probability cut-off: 1e-14, score: 0.717
+        3. N-grams, probability cut-off: 1e-15, score: 0.712
