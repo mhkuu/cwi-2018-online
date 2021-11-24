@@ -30,11 +30,12 @@ def process(language):
 
     if language in ['english', 'spanish', 'german']:
         print('== Length + Frequency ==')
-        for n in range(3, 15):
-            title = 'Length <= {} + frequency'.format(n)
-            model = LengthFreq(language, n)
-            macro_f1, _ = train_and_report(model, data)
-            scores[title] = macro_f1
+        for n in range(5, 15):
+            for m in range(1, 20):
+                title = 'Length <= {} + in top {}000 of frequency list'.format(n, m)
+                model = LengthFreq(language, n, m * 1000)
+                macro_f1, _ = train_and_report(model, data)
+                scores[title] = macro_f1
 
     print('== N-grams ==')
     for n in range(0, 10):

@@ -3,10 +3,10 @@ from calculators.freq import FrequencyCalculator
 
 
 class LengthFreq(AbstractModel):
-    def __init__(self, language, length_cutoff):
+    def __init__(self, language, length_cutoff, list_limit=None):
         self.language = language
 
-        self.freq_calc = FrequencyCalculator(language)
+        self.freq_calc = FrequencyCalculator(language, list_limit)
         self.length_cutoff = length_cutoff
 
     def train(self, train_set):

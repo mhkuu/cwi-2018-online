@@ -2,7 +2,7 @@ from abc import ABC
 
 from nltk.stem import PorterStemmer
 
-LIST_LIMIT = 1000  # Only include the n most frequent words -- we should play around with this number a bit!
+LIST_LIMIT = None  # If set, only include the n most frequent words
 
 
 class FrequencyCalculator(object):
