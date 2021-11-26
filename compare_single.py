@@ -21,52 +21,30 @@ def process(language):
     macro_f1, _ = train_and_report(baseline, data)
     scores[title] = macro_f1
 
-    print('== Length ==')
-    for n in range(3, 15):
-        title = 'Length <= {}'.format(n)
-        model = Length(n)
-        macro_f1, _ = train_and_report(model, data)
-        scores[title] = macro_f1
-
-    if language in ['english', 'spanish', 'german']:
-        print('== Length + Frequency ==')
-        for n in range(5, 15):
-            for m in range(1, 20):
-                title = 'Length <= {} + in top {}000 of frequency list'.format(n, m)
-                model = LengthFreq(language, n, m * 1000)
-                macro_f1, _ = train_and_report(model, data)
-                scores[title] = macro_f1
-
     print('== N-grams ==')
     for n in range(0, 10):
         title = 'N-grams, allowed missing: {}'.format(n)
         model = NgramMissing(language, n)
         macro_f1, _ = train_and_report(model, data)
         scores[title] = macro_f1
-    for i in range(1, 20):
+        print(n, macro_f1)
+    for i in range(5, 20):
         for n in range(2, 4):
             cut_off = 10 ** -i
             title = '{}-grams, probability cut-off: {}'.format(n, cut_off)
             model = NgramProb(language, n, cut_off)
             macro_f1, _ = train_and_report(model, data)
             scores[title] = macro_f1
+            print(n, i, macro_f1)
 
-    print('== All-in-one ==')
-    title = 'Logistic regression'
-    model = LogReg(language)
-    macro_f1, _ = train_and_report(model, data)
-    # print(model.model.coef_)
-    scores[title] = macro_f1
-
-    title = 'Dummy'
-    dummy = Dummy()
-    macro_f1, _ = train_and_report(dummy, data)
-    scores[title] = macro_f1
-
-    high_scores = sorted(scores, key=scores.get, reverse=True)[:10]
+    high_scores = sorted(scores, key=scores.get, reverse=True)[:3]
     print('High scores:')
     for n, high_score in enumerate(high_scores, start=1):
         print('{}. {}, score: {:.3f}'.format(n, high_score, scores[high_score]))
+
+    model = NgramProb(language, 3, 10 ** -6)
+    macro_f1, predictions = train_and_report(model, data, detailed=True)
+    print_results(data, predictions)
 
 
 def train_and_report(model, data, detailed=False):
@@ -79,20 +57,16 @@ def train_and_report(model, data, detailed=False):
 
 def print_results(data, predictions):
     for n, sent in enumerate(data.testset):
-        if sent['gold_label'] != predictions[n]:
+        if len(sent['target_word']) >= 10 and sent['gold_label'] == predictions[n]:
             print(sent['target_word'], sent['gold_label'], predictions[n])
         if n == 1000:
             break
 
 
 if __name__ == '__main__':
-    print('= English =')
-    process('english')
-    print('= Spanish =')
-    process('spanish')
     print('= German =')
-    process('german')
-    # print('= French =')
-    # process('french')
+    process('english')
+    # print('= Spanish =')
+    # process('spanish')
 
 

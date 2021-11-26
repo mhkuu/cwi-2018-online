@@ -54,8 +54,8 @@ This classifier, additional to length, checks if the (stemmed) word appears in t
 
 ### Character n-gram-based
 
-This classifier checks if there are infrequent bigrams in a word, or calculates the bigram probability.
-The frequency list is generated from the character bigrams in the training set, through `retrieve_ngrams.py`.
+This classifier checks if there are infrequent n-grams in a word, or calculates the n-gram probability.
+The frequency list is generated from the character n-grams in the training set, through `retrieve_ngrams.py`.
 
 ### TODO
 

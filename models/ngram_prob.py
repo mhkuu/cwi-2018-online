@@ -3,11 +3,12 @@ from calculators.ngram import NgramCalculator
 
 
 class NgramProb(AbstractModel):
-    def __init__(self, language, cut_off):
+    def __init__(self, language, ngram_size, cut_off):
         self.language = language
+        self.ngram_size = ngram_size
         self.cut_off = cut_off
 
-        self.ngram_calc = NgramCalculator(language)
+        self.ngram_calc = NgramCalculator(language, ngram_size)
 
     def train(self, train_set):
         # No training required
