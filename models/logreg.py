@@ -43,4 +43,4 @@ class LogReg(AbstractModel):
         try:
             return self.model.predict(X)
         except NotFittedError:
-            return False
+            return []

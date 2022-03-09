@@ -71,11 +71,11 @@ def process(language):
 def train_and_report(model, data, detailed=False):
     model.train(data.trainset)
     predictions = model.test(data.testset)
-    if not predictions:
-        return 0, []
-    gold_labels = [sent['gold_label'] for sent in data.testset]
-    macro_f1 = report_score(gold_labels, predictions, detailed=detailed)
-    return macro_f1, predictions
+    if any(predictions):
+        gold_labels = [sent['gold_label'] for sent in data.testset]
+        macro_f1 = report_score(gold_labels, predictions, detailed=detailed)
+        return macro_f1, predictions
+    return 0, []
 
 
 def print_results(data, predictions):
@@ -87,12 +87,12 @@ def print_results(data, predictions):
 
 
 if __name__ == '__main__':
-    # print('= English =')
-    # process('english')
-    # print('= Spanish =')
-    # process('spanish')
-    # print('= German =')
-    # process('german')
+    print('= English =')
+    process('english')
+    print('= Spanish =')
+    process('spanish')
+    print('= German =')
+    process('german')
     print('= French =')
     process('french')
 
