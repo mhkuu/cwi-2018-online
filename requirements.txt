@@ -4,25 +4,25 @@
 #
 #    pip-compile requirements.in
 #
-click==8.0.1
+click==8.0.4
     # via nltk
-joblib==1.0.1
+joblib==1.1.0
     # via
     #   nltk
     #   scikit-learn
-nltk==3.6.3
+nltk==3.7
     # via -r requirements.in
-numpy==1.21.2
+numpy==1.22.3
     # via
     #   scikit-learn
     #   scipy
-regex==2021.9.30
+regex==2022.3.2
     # via nltk
-scikit-learn==1.0
+scikit-learn==1.0.2
     # via -r requirements.in
-scipy==1.7.1
+scipy==1.8.0
     # via scikit-learn
-threadpoolctl==3.0.0
+threadpoolctl==3.1.0
     # via scikit-learn
-tqdm==4.62.3
+tqdm==4.63.0
     # via nltk
