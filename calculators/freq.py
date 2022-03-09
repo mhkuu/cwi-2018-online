@@ -35,7 +35,7 @@ class FrequencyCalculator(object):
                     if list_limit and len(self.frequency) == list_limit:
                         break
 
-        if language == 'german':
+        if language in ['german', 'french']:
             with open('datasets/{}/freq-opensubtitles.txt'.format(language), 'r') as f:
                 for n, line in enumerate(f):
                     columns = line.strip('\n').split()

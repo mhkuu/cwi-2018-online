@@ -1,6 +1,6 @@
 # Complex Word Identification (CWI) for the web
 
-In this repository we research complex word identification for the web, with a minimal set-up: small lists (no more than 1000 items), simple machinery (no taggers, stemmers rather), no fancy neural network stuff, etc.
+In this repository we research complex word identification for the web, with a minimal set-up: small frequency lists (no more than 20000 items), simple machinery (no taggers, stemmers rather), no fancy neural network stuff, etc.
 
 ## Task
 
@@ -8,7 +8,7 @@ The [CWI Shared Task 2018](https://sites.google.com/view/cwisharedtask2018/) con
 
 > "Both China and the Philippines **flexed** their *muscles* on Monday."
 
-In this repo, we focus on the **binary classification task** for the **monolingual English** and **monolingual Spanish** tracks.
+In this repo, we focus on the **binary classification task** for the **monolingual** tracks (English, Spanish, French, German).
 
 We copied the official training, development and test splits of the datasets for both languages.
 
@@ -50,7 +50,7 @@ We have another baseline which just checks on the length of the word. Word lengt
 This classifier, additional to length, checks if the (stemmed) word appears in the 1000 most frequently used words in a frequency list.
 - For English, the frequency list is compiled from the British National Corpus. We copied the list from List 1.2 on [this website](http://ucrel.lancs.ac.uk/bncfreq/flists.html).
 - For Spanish, the frequency list is compiled from the [Corpus de Referencia del Español Actual (CREA)](http://corpus.rae.es/lfrecuencias.html).
-- For German, the frequency list is compiled from [OpenSubtitles2016](http://opus.lingfil.uu.se/OpenSubtitles2016.php), using [this nice repository](https://github.com/hermitdave/FrequencyWords/).
+- For German and French, the frequency list is compiled from [OpenSubtitles2018](http://opus.lingfil.uu.se/OpenSubtitles2018.php), using [this nice repository](https://github.com/hermitdave/FrequencyWords/).
 
 ### Character n-gram-based
 

@@ -1,4 +1,5 @@
 from sklearn.linear_model import LogisticRegression
+from sklearn.exceptions import NotFittedError
 
 from .abstract import AbstractModel
 
@@ -14,6 +15,8 @@ class Baseline(AbstractModel):
             self.avg_word_length = 6.2
         elif language == 'german':
             self.avg_word_length = 6.5
+        elif language == 'french':
+            self.avg_word_length = 6.2  # copied from Spanish
 
         self.model = LogisticRegression()
 
@@ -24,6 +27,9 @@ class Baseline(AbstractModel):
         return [len_chars, len_tokens]
 
     def train(self, train_set):
+        if not train_set:
+            return
+
         X = []
         y = []
         for sent in train_set:
@@ -37,4 +43,7 @@ class Baseline(AbstractModel):
         for sent in test_set:
             X.append(self.extract_features(sent['target_word']))
 
-        return self.model.predict(X)
+        try:
+            return self.model.predict(X)
+        except NotFittedError:
+            return False

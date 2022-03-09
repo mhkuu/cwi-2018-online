@@ -1,4 +1,5 @@
 from sklearn.dummy import DummyClassifier
+from sklearn.exceptions import NotFittedError
 
 from .abstract import AbstractModel
 
@@ -9,6 +10,9 @@ class Dummy(AbstractModel):
         self.model = DummyClassifier(strategy="stratified")
 
     def train(self, train_set):
+        if not train_set:
+            return
+
         X = []
         y = []
         for sent in train_set:
@@ -22,4 +26,7 @@ class Dummy(AbstractModel):
         for sent in test_set:
             X.append(sent['gold_label'])
 
-        return self.model.predict(X)
+        try:
+            return self.model.predict(X)
+        except NotFittedError:
+            return False

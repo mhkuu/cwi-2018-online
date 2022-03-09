@@ -28,14 +28,13 @@ def process(language):
         macro_f1, _ = train_and_report(model, data)
         scores[title] = macro_f1
 
-    if language in ['english', 'spanish', 'german']:
-        print('== Length + Frequency ==')
-        for n in range(5, 15):
-            for m in range(1, 20):
-                title = 'Length <= {} + in top {}000 of frequency list'.format(n, m)
-                model = LengthFreq(language, n, m * 1000)
-                macro_f1, _ = train_and_report(model, data)
-                scores[title] = macro_f1
+    print('== Length + Frequency ==')
+    for n in range(5, 15):
+        for m in range(1, 4):
+            title = 'Length <= {} + in top {}000 of frequency list'.format(n, m * 5)
+            model = LengthFreq(language, n, m * 5000)
+            macro_f1, _ = train_and_report(model, data)
+            scores[title] = macro_f1
 
     print('== N-grams ==')
     for n in range(0, 10):
@@ -72,6 +71,8 @@ def process(language):
 def train_and_report(model, data, detailed=False):
     model.train(data.trainset)
     predictions = model.test(data.testset)
+    if not predictions:
+        return 0, []
     gold_labels = [sent['gold_label'] for sent in data.testset]
     macro_f1 = report_score(gold_labels, predictions, detailed=detailed)
     return macro_f1, predictions
@@ -86,13 +87,13 @@ def print_results(data, predictions):
 
 
 if __name__ == '__main__':
-    print('= English =')
-    process('english')
-    print('= Spanish =')
-    process('spanish')
-    print('= German =')
-    process('german')
-    # print('= French =')
-    # process('french')
+    # print('= English =')
+    # process('english')
+    # print('= Spanish =')
+    # process('spanish')
+    # print('= German =')
+    # process('german')
+    print('= French =')
+    process('french')
 
 
