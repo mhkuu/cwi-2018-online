@@ -6,7 +6,7 @@ from models.ngram_missing import NgramMissing
 from models.ngram_prob import NgramProb
 from models.dummy import Dummy
 from utils.dataset import Dataset
-from utils.scorer import report_score
+from utils.scorer import train_and_report
 
 
 def process(language):
@@ -66,24 +66,6 @@ def process(language):
     print('High scores:')
     for n, high_score in enumerate(high_scores, start=1):
         print('{}. {}, score: {:.3f}'.format(n, high_score, scores[high_score]))
-
-
-def train_and_report(model, data, detailed=False):
-    model.train(data.trainset)
-    predictions = model.test(data.testset)
-    if any(predictions):
-        gold_labels = [sent['gold_label'] for sent in data.testset]
-        macro_f1 = report_score(gold_labels, predictions, detailed=detailed)
-        return macro_f1, predictions
-    return 0, []
-
-
-def print_results(data, predictions):
-    for n, sent in enumerate(data.testset):
-        if sent['gold_label'] != predictions[n]:
-            print(sent['target_word'], sent['gold_label'], predictions[n])
-        if n == 1000:
-            break
 
 
 if __name__ == '__main__':

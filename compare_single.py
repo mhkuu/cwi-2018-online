@@ -6,7 +6,7 @@ from models.ngram_missing import NgramMissing
 from models.ngram_prob import NgramProb
 from models.dummy import Dummy
 from utils.dataset import Dataset
-from utils.scorer import report_score
+from utils.scorer import report_score, train_and_report, print_results
 
 
 def process(language):
@@ -27,7 +27,7 @@ def process(language):
         model = NgramMissing(language, n)
         macro_f1, _ = train_and_report(model, data)
         scores[title] = macro_f1
-        print(n, macro_f1)
+        # print(n, macro_f1)
     for i in range(5, 20):
         for n in range(2, 4):
             cut_off = 10 ** -i
@@ -35,7 +35,7 @@ def process(language):
             model = NgramProb(language, n, cut_off)
             macro_f1, _ = train_and_report(model, data)
             scores[title] = macro_f1
-            print(n, i, macro_f1)
+            # print(n, i, macro_f1)
 
     high_scores = sorted(scores, key=scores.get, reverse=True)[:3]
     print('High scores:')
@@ -47,26 +47,14 @@ def process(language):
     print_results(data, predictions)
 
 
-def train_and_report(model, data, detailed=False):
-    model.train(data.trainset)
-    predictions = model.test(data.testset)
-    gold_labels = [sent['gold_label'] for sent in data.testset]
-    macro_f1 = report_score(gold_labels, predictions, detailed=detailed)
-    return macro_f1, predictions
-
-
-def print_results(data, predictions):
-    for n, sent in enumerate(data.testset):
-        if len(sent['target_word']) >= 10 and sent['gold_label'] == predictions[n]:
-            print(sent['target_word'], sent['gold_label'], predictions[n])
-        if n == 1000:
-            break
-
-
 if __name__ == '__main__':
-    print('= German =')
+    print('= English =')
     process('english')
-    # print('= Spanish =')
-    # process('spanish')
+    print('= Spanish =')
+    process('spanish')
+    print('= German =')
+    process('german')
+    print('= French =')
+    process('french')
 
 
