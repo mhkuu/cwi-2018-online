@@ -1,6 +1,8 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.exceptions import NotFittedError
 
+import math
+
 from models.abstract import AbstractModel
 from calculators.freq import FrequencyCalculator
 from calculators.ngram import NgramCalculator
@@ -13,7 +15,7 @@ class LogReg(AbstractModel):
 
         self.model = LogisticRegression()
         self.freq_calc = FrequencyCalculator(language)
-        self.ngram_calc = NgramCalculator(language)
+        self.ngram_calc = NgramCalculator(language, 3)
 
     def extract_features(self, word):
         length = len(word)
@@ -21,7 +23,8 @@ class LogReg(AbstractModel):
         freq = self.freq_calc.get_freq(word)
         ngram_prob = self.ngram_calc.calc_word_prob(word)
 
-        return [length, starts_uppercase, freq, ngram_prob]
+        # We take the root of the frequency, and the log of the ngram-probability
+        return [length, starts_uppercase, math.sqrt(freq), math.log(ngram_prob)]
 
     def train(self, train_set):
         if not train_set:
