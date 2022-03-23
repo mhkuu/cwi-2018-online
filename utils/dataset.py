@@ -27,3 +27,10 @@ class Dataset:
             dataset = []
 
         return dataset
+
+
+def load_data(language, verbose=False):
+    data = Dataset(language)
+    if verbose:
+        print("{}: {} training - {} test".format(language, len(data.trainset), len(data.testset)))
+    return data

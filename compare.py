@@ -5,14 +5,12 @@ from models.logreg import LogReg
 from models.ngram_missing import NgramMissing
 from models.ngram_prob import NgramProb
 from models.dummy import Dummy
-from utils.dataset import Dataset
+from utils.dataset import load_data
 from utils.scorer import train_and_report
 
 
 def process(language):
-    data = Dataset(language)
-
-    print("{}: {} training - {} test".format(language, len(data.trainset), len(data.testset)))
+    data = load_data(language, verbose=True)
 
     scores = dict()
 
