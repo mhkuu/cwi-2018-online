@@ -8,7 +8,7 @@ from utils.dataset import load_data
 from utils.scorer import train_and_report
 
 
-def process_length_freq(data, cut_off, verbose=False):
+def process_length_freq(language, data, cut_off, verbose=False):
     scores = dict()
 
     if verbose:
@@ -29,7 +29,7 @@ def process_length_freq(data, cut_off, verbose=False):
 
 
 if __name__ == '__main__':
-    languages = ['english', 'spanish', 'german', 'french']
+    languages = ['english', 'german', 'spanish', 'french']
     all_scores = []
     for language in languages:
         print('= {} ='.format(language.capitalize()))
@@ -44,8 +44,8 @@ if __name__ == '__main__':
                 'F1-score': v,
             })
 
-        for cut_off in [5000]:
-            scores = process_length_freq(data, cut_off=cut_off, verbose=True)
+        for cut_off in [5000, 10000]:
+            scores = process_length_freq(language, data, cut_off=cut_off, verbose=True)
             for k, v in scores.items():
                 all_scores.append({
                     'language': language,
@@ -56,4 +56,4 @@ if __name__ == '__main__':
 
     df = pd.DataFrame(all_scores)
     sns.lineplot(x='length', y='F1-score', data=df, hue='language', style='model')
-    plt.savefig('out/length_freq.png')
+    plt.savefig('out/frequency.svg', format='svg')

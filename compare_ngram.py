@@ -7,7 +7,7 @@ from utils.dataset import load_data
 from utils.scorer import train_and_report
 
 
-def process_ngram(data, ngram_size, verbose=False):
+def process_ngram(language, data, ngram_size, verbose=False):
     scores = dict()
 
     if verbose:

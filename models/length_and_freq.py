@@ -21,5 +21,6 @@ class LengthFreq(AbstractModel):
 
     def calc(self, word):
         freq = self.freq_calc.get_freq(word)
-        result = len(word) >= self.length_cutoff and freq == 1
+        # is_uppercase = word[0].isupper() and self.language not in ['german']
+        result = len(word) >= self.length_cutoff and freq == 1  # and not is_uppercase
         return str(int(result))
